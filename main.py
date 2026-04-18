@@ -61,7 +61,7 @@ async def listar_whitelist(interaction: discord.Interaction):
         with MCRcon(ip_servidor, senha_rcon, porta_rcon) as mcr:
             resposta = mcr.command("whitelist list")
             
-        await interaction.followup.send(f"**Status da Whitelist:**\n```\n{resposta}\n```")
+        await interaction.followup.send(f"**Status da Whitelist:**\n```\n{resposta}\n```", ephemeral=True)
         
     except ConnectionRefusedError:
         await interaction.followup.send("Erro: O RCON recusou a conexão. Verifique se o `enable-rcon=true` está no server.properties e se você reiniciou o server.")
