@@ -7,7 +7,7 @@ O objetivo principal deste bot é dar **autonomia** aos membros do servidor. Com
 ## 🚀 Motivação
 - **Automação:** Chega de esperar o dono do server acordar para adicionar alguém na whitelist!
 - **Segurança:** O servidor permanece fechado para desconhecidos. Apenas pessoas autorizadas via Discord conseguem entrar.
-- **Praticidade:** Tudo é feito através de comandos simples (Slash Commands) dentro do Discord.
+- **Praticidade:** Tudo é feito através de comandos simples dentro do Discord.
 
 ## 📋 Funcionalidades
 - [x] **Comandos de Barra**: Interface moderna e intuitiva.
@@ -39,8 +39,6 @@ Se você for rodar o bot na sua própria máquina ou VPS:
 3. Configure as variáveis de ambiente
 
         DISCORD_TOKEN="TOKEN"
-
-        CRAFTY_URL="https://ip:8443" 
 
         CARGO_PERMITIDO="nome do cargo"
 

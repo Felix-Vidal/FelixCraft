@@ -7,8 +7,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
-CRAFTY_URL = os.getenv("CRAFTY_URL")
-CRAFTY_TOKEN = os.getenv("CRAFTY_TOKEN")
 CARGO_PERMITIDO = os.getenv("CARGO_PERMITIDO")
 
 RCON_IP = os.getenv("RCON_IP")
@@ -56,8 +54,6 @@ async def listar_whitelist(interaction: discord.Interaction):
         return
 
     await interaction.response.defer()
-
-    # 2. CONECTA DIRETAMENTE NO JOGO VIA RCON
     ip_servidor = RCON_IP
     senha_rcon = RCON_PASSWORD
     porta_rcon = RCON_PORT
@@ -73,55 +69,49 @@ async def listar_whitelist(interaction: discord.Interaction):
     except Exception as e:
         await interaction.followup.send(f"Ocorreu um erro de conexão: `{e}`")
 
-@bot.tree.command(name="whitelist", description="Adiciona um jogador à whitelist")
-async def whitelist(interaction: discord.interactions, nick: str):
-
+@bot.tree.command(name="whitelist", description="Adiciona um jogador à whitelist do servidor")
+async def whitelist(interaction: discord.Interaction, nick: str):
+    
     cargo = discord.utils.get(interaction.guild.roles, name=CARGO_PERMITIDO)
 
     if cargo not in interaction.user.roles:
         await interaction.response.send_message(f"Você precisa do cargo **{CARGO_PERMITIDO}** para usar este comando.", ephemeral=True)
         return
+    
     await interaction.response.defer()
 
-    headers = {"Authorization": f"Bearer {CRAFTY_TOKEN}"}
-    command = f"whitelist add {nick}"
-
-
-
     try:
-        response = requests.post(CRAFTY_URL, data=command, headers=headers, verify=False)
+        with MCRcon(RCON_IP, RCON_PASSWORD, port=int(RCON_PORT)) as mcr:
+            resposta_servidor = mcr.command(f"whitelist add {nick}")
+            
+        await interaction.followup.send(f"O jogador **{nick}** foi processado!\nResposta do Console: `{resposta_servidor}`")
 
-        if response.status_code == 200:
-            await interaction.followup.send(f"Jogador **{nick}** adicionado com sucesso!")
-        else:
-            detalhe_do_erro = response.text 
-            await interaction.followup.send(f"O painel respondeu com erro {response.status_code}.\nDetalhe: `{detalhe_do_erro}`", ephemeral=True)
+    except ConnectionRefusedError:
+        await interaction.followup.send("Erro: Conexão recusada. O servidor de Minecraft está ligado e o RCON está ativado?", ephemeral=True)
     except Exception as e:
-            await interaction.followup.send("Erro ao tentar comunicar com o Crafty Controller.", ephemeral=True)
+        await interaction.followup.send(f"Erro ao tentar comunicar com o RCON.\nDetalhe: `{e}`", ephemeral=True)
 
-
-@bot.tree.command(name="unwhitelist", description="Remove um jogador da whitelist")
-async def unwhitelist(interaction: discord.interactions, nick: str):
+@bot.tree.command(name="unwhitelist", description="Remove um jogador da whitelist do servidor")
+async def unwhitelist(interaction: discord.Interaction, nick: str):
+    
     cargo = discord.utils.get(interaction.guild.roles, name=CARGO_PERMITIDO)
 
     if cargo not in interaction.user.roles:
         await interaction.response.send_message(f"Você precisa do cargo **{CARGO_PERMITIDO}** para usar este comando.", ephemeral=True)
         return
+    
     await interaction.response.defer()
 
-    headers = {"Authorization": f"Bearer {CRAFTY_TOKEN}"}
-    command = f"whitelist remove {nick}"
-
     try:
-        response = requests.post(CRAFTY_URL, data=command, headers=headers, verify=False)
+        with MCRcon(RCON_IP, RCON_PASSWORD, port=int(RCON_PORT)) as mcr:
+            resposta_servidor = mcr.command(f"whitelist remove {nick}")
+            
+        await interaction.followup.send(f"O jogador **{nick}** foi removido!\nResposta do Console: `{resposta_servidor}`")
 
-        if response.status_code == 200:
-            await interaction.followup.send(f"Jogador **{nick}** foi removido da whitelist!")
-        else:
-            detalhe_do_erro = response.text 
-            await interaction.followup.send(f"O painel respondeu com erro {response.status_code}.\nDetalhe: `{detalhe_do_erro}`", ephemeral=True)
+    except ConnectionRefusedError:
+        await interaction.followup.send("Erro: Conexão recusada. O servidor de Minecraft está ligado e o RCON está ativado?", ephemeral=True)
     except Exception as e:
-            await interaction.followup.send("Erro ao tentar comunicar com o Crafty Controller.", ephemeral=True)
+        await interaction.followup.send(f"Erro ao tentar comunicar com o RCON.\nDetalhe: `{e}`", ephemeral=True)
 
 
 bot.run(DISCORD_TOKEN)
