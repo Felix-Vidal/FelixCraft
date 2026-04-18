@@ -8,6 +8,8 @@ load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 CARGO_PERMITIDO = os.getenv("CARGO_PERMITIDO")
 
+IP_SERVIDOR = os.getenv("IP_SERVIDOR")
+
 RCON_IP = os.getenv("RCON_IP")
 RCON_PASSWORD = os.getenv("RCON_PASSWORD")
 RCON_PORT = int(os.getenv("RCON_PORT"))
@@ -43,6 +45,14 @@ class FelixCraft(discord.Client):
                     print(f'Erro: O bot não tem permissão de "Gerenciar Cargos" no servidor {guild.name}.')
 
 bot = FelixCraft()
+
+@bot.tree.command(name="ip", description="Mostra o IP do Servidor de Minecraft")
+async def ip(interaction: discord.Interaction):
+    await interaction.response.send_message(
+        f"O IP do Servidor de Minecraft é: `{IP_SERVIDOR}`\n" 
+        "Lembre-se de que é necessário estar na whitelist para acessar o servidor!"
+        "caso queira entrar em contato com um moderador para ser adicionado, use o comando `/help` para saber quem pode te ajudar."
+        , ephemeral=True)
 
 @bot.tree.command(name="listar_whitelist", description="Mostra todos os jogadores que estão na whitelist")
 async def listar_whitelist(interaction: discord.Interaction):
@@ -125,6 +135,7 @@ async def help_cmd(interaction: discord.Interaction):
         mensagem_ajuda = (
             "🛠️ **Painel de Controle - Félix Craft** 🛠️\n\n"
             "Como você tem permissão, aqui estão os comandos disponíveis:\n\n"
+            "🔹 `/ip` - Mostrar o IP do servidor de Minecraft.\n"
             "🔹 `/whitelist [nick]` - Adiciona um jogador para poder entrar no servidor.\n"
             "🔹 `/unwhitelist [nick]` - Remove o acesso de um jogador ao servidor.\n"
             "🔹 `/listar_whitelist` - Listar os jogadores que podem entrar no servidor.\n"

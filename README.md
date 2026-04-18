@@ -39,6 +39,7 @@ pip install -r requirements.txt
 ```env
 DISCORD_TOKEN="seu_token_do_discord_aqui"
 CARGO_PERMITIDO="Nome_Do_Cargo_Ou_ID"
+IP_SERVIDOR="127.0.0.1" ou IP publico da sua VPS esse vai ser o minecraft
 RCON_IP="127.0.0.1" # Ou o IP público da sua VPS
 RCON_PASSWORD="sua_senha_rcon_aqui"
 RCON_PORT=25575
@@ -70,6 +71,14 @@ docker-compose up -d --build
 ```
 ```bash
 /listar_whitelist
+```
+
+```bash
+/ip
+```
+
+```bash
+/help
 ```
 
 
