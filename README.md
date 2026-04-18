@@ -51,9 +51,18 @@ RCON_PORT=25575
 A forma ideal de rodar o bot na sua VPS (ex: Oracle Cloud / Ubuntu) é através do Docker Compose, garantindo que ele rode 24/7 e reinicie automaticamente em caso de falhas.
 
 Pré-requisitos
-Docker e Docker Compose instalados no servidor.
+- Docker e Docker Compose instalados no servidor.
+
+Instalação
+- Crie e preencha o arquivo .env conforme a seção de configuração acima.
+- Suba o container em segundo plano
 
 ## Execução
+1. Instale as dependências:
+```bash
+pip install -r requirements.txt
+```
+2. Execute o bot:
 ```bash
 python main.py
 ```
@@ -61,10 +70,10 @@ python main.py
 
 ## Comandos Disponíveis
 ```bash
-/whitelist {nick}
+/whitelist [nick]
 ```
 ```bash
-/unwhitelist {nick}
+/unwhitelist [nick]
 ```
 ```bash
 /listar_whitelist
