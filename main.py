@@ -51,8 +51,7 @@ async def ip(interaction: discord.Interaction):
     await interaction.response.send_message(
         f"O IP do Servidor de Minecraft é: `{IP_SERVIDOR}`\n" 
         "Lembre-se de que é necessário estar na whitelist para acessar o servidor!"
-        "caso queira entrar em contato com um moderador para ser adicionado, use o comando `/help` para saber quem pode te ajudar."
-        , ephemeral=True)
+        "caso queira entrar em contato com um moderador para ser adicionado, use o comando `/help` para saber quem pode te ajudar.")
 
 @bot.tree.command(name="listar_whitelist", description="Mostra todos os jogadores que estão na whitelist")
 async def listar_whitelist(interaction: discord.Interaction):
