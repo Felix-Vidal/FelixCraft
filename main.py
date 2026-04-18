@@ -127,7 +127,7 @@ async def help_cmd(interaction: discord.Interaction):
             "Como você tem permissão, aqui estão os comandos disponíveis:\n\n"
             "🔹 `/whitelist [nick]` - Adiciona um jogador para poder entrar no servidor.\n"
             "🔹 `/unwhitelist [nick]` - Remove o acesso de um jogador ao servidor.\n"
-            "🔹 `/listar_whitelist - Listar os jogadores que pode entrar no servidor"
+            "🔹 `/listar_whitelist` - Listar os jogadores que podem entrar no servidor.\n"
             "🔹 `/help` - Mostra esta mensagem de ajuda."
         )
         await interaction.response.send_message(mensagem_ajuda, ephemeral=True)
