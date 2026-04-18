@@ -52,7 +52,7 @@ Se você for rodar o bot na sua própria máquina ou VPS:
 
 ## Execução
 
-python main.py
+      python main.py
 
 
 ## Comandos Disponíveis
