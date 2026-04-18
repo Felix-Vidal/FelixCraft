@@ -112,5 +112,42 @@ async def unwhitelist(interaction: discord.Interaction, nick: str):
     except Exception as e:
         await interaction.followup.send(f"Erro ao tentar comunicar com o RCON.\nDetalhe: `{e}`", ephemeral=True)
 
+@bot.tree.command(name="help", description="Mostra como usar o bot ou quem pode te ajudar.")
+async def help_cmd(interaction: discord.Interaction):
+    cargo = discord.utils.get(interaction.guild.roles, name=CARGO_PERMITIDO)
+
+    # Prevenção de erro caso o cargo não seja encontrado no Discord
+    if not cargo:
+        await interaction.response.send_message(f"O cargo **{CARGO_PERMITIDO}** não foi encontrado neste servidor. Avise o Félix!", ephemeral=True)
+        return
+    
+    if cargo in interaction.user.roles:
+        mensagem_ajuda = (
+            "🛠️ **Painel de Controle - Félix Craft** 🛠️\n\n"
+            "Como você tem permissão, aqui estão os comandos disponíveis:\n\n"
+            "🔹 `/whitelist [nick]` - Adiciona um jogador para poder entrar no servidor.\n"
+            "🔹 `/unwhitelist [nick]` - Remove o acesso de um jogador ao servidor.\n"
+            "🔹 `/listar_whitelist - Listar os jogadores que pode entrar no servidor"
+            "🔹 `/help` - Mostra esta mensagem de ajuda."
+        )
+        await interaction.response.send_message(mensagem_ajuda, ephemeral=True)
+
+    else:
+        lista_moderadores = [membro.mention for membro in cargo.members if not membro.bot]
+        
+        if lista_moderadores:
+            mods_formatados = ", ".join(lista_moderadores)
+            mensagem_negada = (
+                f"Você não possui o cargo necessário para liberar pessoas no servidor.\n"
+                f"Por favor, peça para um dos moderadores abaixo executar o comando para você:\n\n"
+                f"👉 {mods_formatados}"
+            )
+        else:
+            mensagem_negada = (
+                "**Acesso Negado!**\n\n"
+                "Você não tem permissão para usar este comando e, no momento, não encontrei nenhum moderador com o cargo para te ajudar. Tente novamente mais tarde!"
+            )
+
+        await interaction.response.send_message(mensagem_negada, ephemeral=True)
 
 bot.run(DISCORD_TOKEN)
