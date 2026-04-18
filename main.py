@@ -1,7 +1,6 @@
 import discord
 from discord import app_commands
 from mcrcon import MCRcon
-import requests
 import os
 from dotenv import load_dotenv
 

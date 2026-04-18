@@ -25,41 +25,50 @@ O objetivo principal deste bot é dar **autonomia** aos membros do servidor. Com
 Se você for rodar o bot na sua própria máquina ou VPS:
 
 1. Clone o repositório:
-   ```bash
-   git clone [https://github.com/Felix-Vidal/Felix-Craft.git](https://github.com/Felix-Vidal/Felix-Craft.git)
+```bash
+   git clone https://github.com/Felix-Vidal/Felix-Craft.git
+```
 
 2. Instale as dependências
 
-    ```bash
-    pip install discord.py
-    pip install mcrcon
-    pip install requests
-    pip install python-dotenv
+```bash
+pip install discord.py
+pip install mcrcon
+pip install requests
+pip install python-dotenv
+```
 
 3. Configure as variáveis de ambiente
 
-        DISCORD_TOKEN="TOKEN"
+```env
+DISCORD_TOKEN="seu_token_do_discord_aqui"
+CARGO_PERMITIDO="Nome_Do_Cargo_Ou_ID"
+RCON_IP="127.0.0.1" # Ou o IP público da sua VPS
+RCON_PASSWORD="sua_senha_rcon_aqui"
+RCON_PORT=25575
+```
+## 🐳 Deploy em Produção (Recomendado via Docker)
+A forma ideal de rodar o bot na sua VPS (ex: Oracle Cloud / Ubuntu) é através do Docker Compose, garantindo que ele rode 24/7 e reinicie automaticamente em caso de falhas.
 
-        CARGO_PERMITIDO="nome do cargo"
-
-        RCON_IP="ip" 
-
-        RCON_PASSWORD="SenhaSuperSeguraRcon2026!"
-    
-        RCON_PORT=25575
+Pré-requisitos
+Docker e Docker Compose instalados no servidor.
 
 ## Execução
-
-      python main.py
+```bash
+python main.py
+```
 
 
 ## Comandos Disponíveis
-
-    /whitelist {nick}
-
-    /unwhitelist {nick}
-
-    /listar_whitelist
+```bash
+/whitelist {nick}
+```
+```bash
+/unwhitelist {nick}
+```
+```bash
+/listar_whitelist
+```
 
 
 ## 🔒 Segurança
