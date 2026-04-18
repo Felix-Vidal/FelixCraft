@@ -64,9 +64,9 @@ async def listar_whitelist(interaction: discord.Interaction):
         await interaction.followup.send(f"**Status da Whitelist:**\n```\n{resposta}\n```", ephemeral=True)
         
     except ConnectionRefusedError:
-        await interaction.followup.send("Erro: O RCON recusou a conexão. Verifique se o `enable-rcon=true` está no server.properties e se você reiniciou o server.")
+        await interaction.followup.send("Erro: O RCON recusou a conexão. Verifique se o `enable-rcon=true` está no server.properties e se você reiniciou o server.", ephemeral=True)
     except Exception as e:
-        await interaction.followup.send(f"Ocorreu um erro de conexão: `{e}`")
+        await interaction.followup.send(f"Ocorreu um erro de conexão: `{e}`", ephemeral=True)
 
 @bot.tree.command(name="whitelist", description="Adiciona um jogador à whitelist do servidor")
 async def whitelist(interaction: discord.Interaction, nick: str):
@@ -148,6 +148,6 @@ async def help_cmd(interaction: discord.Interaction):
                 "Você não tem permissão para usar este comando e, no momento, não encontrei nenhum moderador com o cargo para te ajudar. Tente novamente mais tarde!"
             )
 
-        await interaction.response.send_message(mensagem_negada, ephemeral=True)
+        await interaction.response.send_message(mensagem_negada)
 
 bot.run(DISCORD_TOKEN)
