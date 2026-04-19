@@ -137,7 +137,8 @@ async def help_cmd(interaction: discord.Interaction):
 
     # Prevenção de erro caso o cargo não seja encontrado no Discord
     if not cargo:
-        await interaction.response.send_message(f"O cargo **{CARGO_PERMITIDO}** não foi encontrado neste servidor. Avise o Félix!", ephemeral=True)
+        await interaction.response.send_message(
+            f"O cargo **{CARGO_PERMITIDO}** não foi encontrado neste servidor.", ephemeral=True)
         return
     
     if cargo in interaction.user.roles:
@@ -162,7 +163,10 @@ async def help_cmd(interaction: discord.Interaction):
             mensagem_negada = (
                 f"Você não possui o cargo necessário para liberar pessoas no servidor.\n"
                 f"Por favor, peça para um dos moderadores abaixo executar o comando para você:\n\n"
-                f"👉 {mods_formatados}"
+                f"👉 {mods_formatados}\n\n\n"
+                "👾 **Código Aberto!**\n"
+                "Quer ver como este bot foi construído ou ajudar a melhorá-lo? Sinta-se à vontade para contribuir no nosso repositório: https://github.com/Felix-Vidal/FelixCraft"
+
             )
         else:
             mensagem_negada = (
