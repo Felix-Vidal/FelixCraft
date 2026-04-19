@@ -148,7 +148,9 @@ async def help_cmd(interaction: discord.Interaction):
             "🔹 `/whitelist [nick]` - Adiciona um jogador para poder entrar no servidor.\n"
             "🔹 `/unwhitelist [nick]` - Remove o acesso de um jogador ao servidor.\n"
             "🔹 `/listar_whitelist` - Listar os jogadores que podem entrar no servidor.\n"
-            "🔹 `/help` - Mostra esta mensagem de ajuda."
+            "🔹 `/help` - Mostra esta mensagem de ajuda. \n\n"
+            "👾 **Código Aberto!**\n"
+            "Quer ver como este bot foi construído ou ajudar a melhorá-lo? Sinta-se à vontade para contribuir no nosso repositório: https://github.com/Felix-Vidal/FelixCraft"
         )
         await interaction.response.send_message(mensagem_ajuda, ephemeral=True)
 
