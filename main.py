@@ -1,3 +1,5 @@
+import re
+
 import discord
 from discord import app_commands
 from mcrcon import MCRcon
@@ -85,7 +87,11 @@ async def whitelist(interaction: discord.Interaction, nick: str):
     if cargo not in interaction.user.roles:
         await interaction.response.send_message(f"Você precisa do cargo **{CARGO_PERMITIDO}** para usar este comando.", ephemeral=True)
         return
-    
+
+    if not re.match(r"^[a-zA-Z0-9_]{3,16}$", nick):
+        await interaction.response.send_message("Nickname inválido! O nick do Minecraft só pode conter letras, números e underline (_), com no máximo 16 caracteres.", ephemeral=True)
+        return
+
     await interaction.response.defer()
 
     try:
@@ -106,6 +112,10 @@ async def unwhitelist(interaction: discord.Interaction, nick: str):
 
     if cargo not in interaction.user.roles:
         await interaction.response.send_message(f"Você precisa do cargo **{CARGO_PERMITIDO}** para usar este comando.", ephemeral=True)
+        return
+    
+    if not re.match(r"^[a-zA-Z0-9_]{3,16}$", nick):
+        await interaction.response.send_message("Nickname inválido! O nick do Minecraft só pode conter letras, números e underline (_), com no máximo 16 caracteres.", ephemeral=True)
         return
     
     await interaction.response.defer()
