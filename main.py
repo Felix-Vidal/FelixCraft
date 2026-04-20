@@ -48,6 +48,22 @@ class FelixCraft(discord.Client):
 
 bot = FelixCraft()
 
+@bot.event
+async def on_guild_join(guild):
+    cargo = discord.utils.get(guild.roles, name=CARGO_PERMITIDO)
+    
+    if not cargo:
+        try:
+            await guild.create_role(
+                name=CARGO_PERMITIDO, 
+                color=discord.Color.green(), 
+                hoist=True,
+                reason="Criado automaticamente pelo bot de Whitelist"
+            )
+            print(f'Cargo "{CARGO_PERMITIDO}" foi criado automaticamente no servidor {guild.name}!')
+        except discord.Forbidden:
+            print(f'Erro: O bot não tem permissão de "Gerenciar Cargos" no servidor {guild.name}.')
+
 @bot.tree.command(name="ip", description="Mostra o IP do Servidor de Minecraft")
 async def ip(interaction: discord.Interaction):
     await interaction.response.send_message(
